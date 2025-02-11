@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+    font-family: 'Poppins';
+} */
+/* html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #F9FAFB; /* Your desired background color */
+    /* background-image: url('/path-to-your-image.jpg'); Uncomment and use if you want a background image */
+    /* background-size: cover; */
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
+/* } */ 

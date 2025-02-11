@@ -1,0 +1,154 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int          @id @default(autoincrement())
+  email            String       @unique
+  name             String
+  password         String
+  phoneNumber      String?
+  accountType      accountType?
+  role             String?
+  profilePicture   String?
+  about            String?
+  location         String?
+  responseTime     String?
+  linkedInUrl      String?
+  githubUrl        String?
+  portfolioUrl     String?
+  skills           String[]
+  yearOfExperience Int?
+  HourlyRate       Int?
+  availability     String?
+
+  //client
+  companyName String?
+  position    String?
+  industry    String?
+  website     String?
+
+  projectsCompleted Int   @default(0)
+  totalEarnings     Float @default(0.0)
+
+  rating          Float     @default(0.0)
+  ratingCount     Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  isEmailVerified Boolean   @default(false)
+  isPhoneVerified Boolean   @default(false)
+
+  // Relations
+  projects         Project[]   @relation("ClientProjects")
+  assignedProjects Project[]   @relation("FreelancerProjects")
+  proposals        Proposal[]
+  education        Education[]
+  languages        Languages[]
+
+  //chat
+  sentMessages    Chat[]    @relation("SentMessages")
+  receivedMessages    Chat[]    @relation("ReceivedMessages")
+}
+
+model Education {
+  id          Int    @id @default(autoincrement())
+  institution String
+  degree      String
+  startYear   String
+  endYear     String
+  User        User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int?
+}
+
+model Languages {
+  id       Int    @id @default(autoincrement())
+  language String
+  level    String
+  User     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int?
+}
+
+model Project {
+  id              Int             @id @default(autoincrement())
+  title           String
+  description     String
+  budget          Float
+  duration        String
+  skillsRequired  String[]
+  status          ProjectStatus   @default(OPEN)
+  experienceLevel ExperienceLevel @default(BEGINNER)
+  deadline        DateTime?
+  assignedAt      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  userId          Int
+
+  //realtions
+  User         User  @relation("ClientProjects", fields: [userId], references: [id], onDelete: Cascade)
+  freelancer   User? @relation("FreelancerProjects", fields: [freelancerId], references: [id], onDelete: Cascade)
+  freelancerId Int?
+
+  Proposal Proposal[]
+}
+
+model Proposal {
+  id               Int            @id @default(autoincrement())
+  coverLetter      String
+  proposedBudget   Float
+  proposedTimeline String
+  status           ProposalStatus @default(SUBMITTED)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  // Relations
+  project      Project @relation(fields: [projectId], references: [id])
+  projectId    Int
+  freelancer   User    @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  freelancerId Int
+}
+
+model Chat {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  message    String
+  timestamp  DateTime @default(now())
+
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User    @relation("ReceivedMessages", fields: [receiverId], references: [id])
+}
+
+enum ProjectStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CLOSED
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
+enum ProposalStatus {
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+}
+
+enum accountType {
+  FREELANCER
+  CLIENT
+}
