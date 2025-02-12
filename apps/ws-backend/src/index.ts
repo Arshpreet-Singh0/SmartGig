@@ -63,7 +63,11 @@ wss.on("connection", (ws, req)=>{
               
             }
           }
-    })
+    });
+
+    ws.close = ()=>{
+      connection.delete(userId);
+    }
 });
 
 function checkUser(token: string): string | null {
