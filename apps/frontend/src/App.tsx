@@ -15,6 +15,7 @@ import PostProject from "./pages/client/PostProject";
 import ViewProjectDetails from "./pages/projects/ViewProjectDetails";
 import OnboardingForm from "./pages/onboarding/freelancer/OnBoarding";
 import ClientOnboardingForm from "./pages/onboarding/client/ClientOnBaording";
+import ChatPage from "./pages/chats/ChatPage";
 
 const routes = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const routes = createBrowserRouter([
           { path: "/view-deatils/:projectId", element: <DashBaordPage><ViewProjectDetails /></DashBaordPage>},
           { path: "/freelancer/onboarding", element: <OnboardingForm />},
           { path: "/client/onboarding", element: <ClientOnboardingForm/>},
+          { path: "/chats", element: <ChatPage/>},
           { path: "*", element: <NotFound />},
     ],
   },

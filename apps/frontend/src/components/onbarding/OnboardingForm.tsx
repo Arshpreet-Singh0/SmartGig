@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import type { FreelancerProfile } from "../../types/types";
 import axios from "axios";
-import { BACKEND_URL } from "../../Congfig";
+import { BACKEND_URL } from "../../Config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import PersonalInfo from "./PersonalInfo";

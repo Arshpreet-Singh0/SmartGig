@@ -35,7 +35,7 @@ wss.on("connection", (ws, req)=>{
         
 
         if(parsedData.type==="chat"){
-            const receiverId = parsedData.receiverId;
+            const receiverId = parsedData.receiverId.toString();
 
             try {
               await prisma.chat.create({
@@ -44,7 +44,10 @@ wss.on("connection", (ws, req)=>{
                   senderId : Number(userId),
                   receiverId : Number(receiverId)
                 }
-              })
+              });
+
+              console.log(connection.has(receiverId));
+              
   
               if(connection.has(receiverId)){
                   const socket = connection.get(receiverId);

@@ -7,7 +7,7 @@ import type { ClientProfile } from "../../../types/types";
 import CompanyInfo from "./CompanyInfo";
 import Communication from "./Communication";
 import axios from "axios";
-import { BACKEND_URL } from "../../../Congfig";
+import { BACKEND_URL } from "../../../Config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
