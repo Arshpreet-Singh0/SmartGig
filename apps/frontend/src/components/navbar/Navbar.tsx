@@ -3,8 +3,8 @@ import { LogOut, Search, User, Menu, X } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "../ui/ThemeToggle";
-import { useAppSelector } from "../../hooks/hook";
-import { isUserLoggedIn } from "../../redux/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hook";
+import { clearUser, isUserLoggedIn } from "../../redux/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,8 +13,9 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const dispatch = useAppDispatch();
 
-    const { theme } = useAppSelector(store=>store.theme);
+  const { theme } = useAppSelector((store) => store.theme);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -33,6 +34,11 @@ const Navbar = () => {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
+  const handleLogout = async () => {
+    dispatch(clearUser());
+    navigate("/signin?next=/dashboard");
+  };
+
   return (
     <div className="sticky top-0 z-50 bg-white dark:bg-[#171717] ext-black dark:text-white shadow-md">
       {/* Navbar */}
@@ -40,7 +46,11 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center ">
           <img
-            src={theme=="light" ? "https://res.cloudinary.com/djusmuols/image/upload/SmartGig__1_-removebg-preview_tu6unn.png" : "https://res.cloudinary.com/djusmuols/image/upload/SmartGig__3_-removebg-preview_szswyw.png"}
+            src={
+              theme == "light"
+                ? "https://res.cloudinary.com/djusmuols/image/upload/SmartGig__1_-removebg-preview_tu6unn.png"
+                : "https://res.cloudinary.com/djusmuols/image/upload/SmartGig__3_-removebg-preview_szswyw.png"
+            }
             alt="logo"
             className="w h-52 "
           />
@@ -48,7 +58,10 @@ const Navbar = () => {
 
         {/* Hamburger Icon */}
         <div className="md:hidden">
-          <button onClick={toggleSidebar} className="text-black dark:text-white">
+          <button
+            onClick={toggleSidebar}
+            className="text-black dark:text-white"
+          >
             {sidebarOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -80,14 +93,18 @@ const Navbar = () => {
                         <h1 className="text-lg text-center">{user?.name}</h1>
                       </div>
                       <div className="border-t border-gray-200">
-                        <h2 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                          <User className="mr-2" />
-                          <Link to="/profile">Profile</Link>
-                        </h2>
-                        <h2 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                          <LogOut className="mr-2" />
-                          Logout
-                        </h2>
+                        <div onClick={() => navigate("/profile")}>
+                          <h2 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                            <User className="mr-2" />
+                            <p>Profile</p>
+                          </h2>
+                        </div>
+                        <div onClick={handleLogout}>
+                          <h2 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                            <LogOut className="mr-2" />
+                            Logout
+                          </h2>
+                        </div>
                       </div>
                     </div>
                   )}

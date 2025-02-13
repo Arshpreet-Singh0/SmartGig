@@ -115,6 +115,30 @@ app.get('/messages/:senderId', isAuthenticated, async (req, res) => {
   }
 });
 
+app.post("/send-message/:id", isAuthenticated, async(req, res)=>{
+  try {
+    const userId = Number(req.userId);
+    const {message} = req.body;
+
+    await prisma.chat.create({
+      data : {
+        senderId : userId,
+        receiverId : Number(req.params.id),
+        message : message
+      }
+    });
+
+    res.status(200).json({
+      message : "Message Sent successfully",
+      success : true,
+    });
+
+
+  } catch (error) {
+    console.log(error);
+  }
+});  
+
 
 app.listen(PORT, ()=>{
     console.log(`Listening to Port ${PORT}`);

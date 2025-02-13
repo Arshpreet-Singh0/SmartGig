@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../ui/Button";
 import { Check, Clock4, Globe, MessageSquareText, User2 } from "lucide-react";
+import Modal from "../ui/Model";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,12 +25,14 @@ interface Project {
   User: {
     name: string;
     email: string;
+    id: number;
   };
 }
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const { projectId } = useParams();
@@ -68,11 +71,11 @@ const ProjectDetails = () => {
       </div>
     );
   }
-
-  console.log(project);
   
 
   return (
+    <>
+    <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} id={project?.User?.id}/>
     <div className="w-[90%] md:w-[80%] mx-auto pt-10 text-black dark:text-white">
       <div className="text-center">
         <h1 className="text-4xl font-semibold">{project.title}</h1>
@@ -109,6 +112,7 @@ const ProjectDetails = () => {
           text="Chat With Client"
           variant="outline"
           className="px-9 py-3 border-none dark:bg-[#404040] bg-white text-black dark:text-white"
+          onClick={()=>setIsOpen(true)}
         />
       </div>
 
@@ -186,6 +190,7 @@ const ProjectDetails = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

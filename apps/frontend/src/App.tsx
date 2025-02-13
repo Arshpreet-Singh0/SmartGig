@@ -32,7 +32,7 @@ const routes = createBrowserRouter([
           { path: "/view-bid/:projectId", element: <ViewProposal />},
           { path: "/bid/edit/:projectId", element: <EditProposal />},
           { path: "/post-project", element: <DashBaordPage><PostProject /></DashBaordPage>},
-          { path: "/view-deatils/:projectId", element: <DashBaordPage><ViewProjectDetails /></DashBaordPage>},
+          { path: "/view-deatils/:projectId", element: <ViewProjectDetails />},
           { path: "/freelancer/onboarding", element: <OnboardingForm />},
           { path: "/client/onboarding", element: <ClientOnboardingForm/>},
           { path: "/chats", element: <ChatPage/>},
