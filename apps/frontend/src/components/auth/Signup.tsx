@@ -14,6 +14,7 @@ const Signup = () => {
         password: "",
         accountType : "",
     });
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const naviagte = useNavigate();
     const handleChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
@@ -26,6 +27,7 @@ const Signup = () => {
         e.preventDefault();
 
         try {
+            setLoading(true);
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, input ,{
                 withCredentials : true,
             });
@@ -51,13 +53,15 @@ const Signup = () => {
                 message.error("Something went wrong.");
                 console.error(error);
               }
+        }finally{
+            setLoading(true);
         }
         
     }
 
   return (
     <> 
-        <Form type="signup" onChange={handleChange} onSubmit={handleSubmit} input={input}/>
+        <Form type="signup" onChange={handleChange} onSubmit={handleSubmit} input={input} loading={loading}/>
     </>
   )
 }

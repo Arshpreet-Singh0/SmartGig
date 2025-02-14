@@ -2,6 +2,7 @@ import React from "react";
 import { Input } from "../ui/Input";
 import { Button } from "../ui/Button";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 interface inputType {
   email: string;
@@ -15,9 +16,10 @@ interface FormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   input: inputType;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  loading : boolean;
 }
 
-const Form = ({ type, onSubmit, input, onChange }: FormProps) => {
+const Form = ({ type, onSubmit, input, onChange, loading }: FormProps) => {
   const navigate = useNavigate();
 
   return (
@@ -140,11 +142,20 @@ const Form = ({ type, onSubmit, input, onChange }: FormProps) => {
           )}
 
           {/* Submit Button */}
-          <Button
+          {
+            loading ? <Button
+            variant="primary"
+            startIcon={<Loader2 />}
+            text={"Please wait"}
+            className="mt-6 w-full py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            loading={loading}
+            
+          /> : <Button
             variant="primary"
             text={type === "signin" ? "Sign In" : "Sign Up"}
             className="mt-6 w-full py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
           />
+          }
         </form>
       </div>
     </div>
