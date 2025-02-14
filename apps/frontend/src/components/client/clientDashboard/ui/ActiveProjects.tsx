@@ -27,11 +27,11 @@ interface Props {
 const ActiveProjects: React.FC<Props> = ({ projects }) => {
   return (
     <div className="p-6">
-      <div className="p-4 bg-black-200 rounded-lg">
-        <h1 className="text-xl text-white opacity-80 font-semibold">Active Projects</h1>
+      <div className="p-4 bg-gray-50 shadow-md dark:bg-black-200 rounded-lg">
+        <h1 className="text-xl dark:text-white opacity-80 font-semibold">Active Projects</h1>
 
         <div className="">
-          <div className="grid grid-cols-6 mt-4 text-gray-300 border-b border-gray-700 pb-4">
+          <div className="grid grid-cols-6 mt-4 dark:text-gray-300 border-b border-gray-700 pb-4">
             <div className="col-span-2 font-bold">Project Name</div>
             <div className="col-span-1 font-bold">Freelancer</div>
             <div className="col-span-1 font-bold">Deadline</div>
@@ -39,10 +39,10 @@ const ActiveProjects: React.FC<Props> = ({ projects }) => {
             <div className="col-span-1 font-bold">Status</div>
 
           </div>
-          <div className="h-56 overflow-y-auto">
+          <div className="h-64 overflow-y-auto">
             {
               projects.map((project) => (
-                <div className="grid grid-cols-6 mt-4 text-gray-300 border-b border-gray-700 pb-5">
+                <div className="grid grid-cols-6 mt-4 dark:text-gray-300 border-b border-gray-700 pb-5">
                 <div className="col-span-2">{project.title}</div>
                 <div className="col-span-1">{project.freelancer.name}</div>
                 <div className="col-span-1">{project.duration}</div>

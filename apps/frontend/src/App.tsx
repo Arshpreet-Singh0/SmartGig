@@ -16,6 +16,7 @@ import ViewProjectDetails from "./pages/projects/ViewProjectDetails";
 import OnboardingForm from "./pages/onboarding/freelancer/OnBoarding";
 import ClientOnboardingForm from "./pages/onboarding/client/ClientOnBaording";
 import ChatPage from "./pages/chats/ChatPage";
+import ViewProposals from "./pages/proposals/ViewProposals";
 
 const routes = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const routes = createBrowserRouter([
       { path: "/", element: <LandingPage /> },
           { path: "/signin", element: <SigninPage /> },
           { path: "/signup", element: <SignupPage /> },
-          { path: "/profile", element: <ProfilePage />},
+          { path: "/profile/:id", element: <ProfilePage />},
           { path: "/projects", element: <JobPage />},
           { path: "/dashboard", element: <DashBaordPage><DashBoard /></DashBaordPage>},
           { path: "/place-bid/:projectId", element: <PlaceBid />},
@@ -35,6 +36,7 @@ const routes = createBrowserRouter([
           { path: "/view-deatils/:projectId", element: <ViewProjectDetails />},
           { path: "/freelancer/onboarding", element: <OnboardingForm />},
           { path: "/client/onboarding", element: <ClientOnboardingForm/>},
+          { path: "/project/proposals/:id", element: <ViewProposals/>},
           { path: "/chats", element: <ChatPage/>},
           { path: "*", element: <NotFound />},
     ],

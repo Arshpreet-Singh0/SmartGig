@@ -16,6 +16,10 @@ const Modal = ({
     const [msg, setMsg] = useState("");
 
   const handleClickSendMessage = async()=>{
+    if(msg.length==0 || msg.trim.length==0){
+        message.error("Message is required.");
+        return;
+    }
     try {
         const res = await axios.post(`${BACKEND_URL}/send-message/${id}`, {message : msg}, {
             withCredentials : true

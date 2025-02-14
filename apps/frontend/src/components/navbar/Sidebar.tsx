@@ -15,6 +15,10 @@ const Sidebar = () => {
   const [selected, setSlected] = useState(1);
   const navigate = useNavigate();
   const { user } = useAppSelector((store) => store.auth);
+  const handleClick = (key:number, to:string)=>{
+    setSlected(key);
+    navigate(`/${to}`)
+  }
   return (
     <div className="flex flex-col gap-4 bg-gray-50 dark:bg-[#262626] w-64 h-screen sticky top-0 z-10 text-[#DBDBDB] px-6 border-r dark:border-gray-700">
       <div className="flex items-center h-16">
@@ -28,7 +32,8 @@ const Sidebar = () => {
             className={`flex items-center px-3 py-[0.75rem] rounded-lg text-[#000] dark:text-white ${
               selected == 1 ? "bg-gray-200 dark:bg-[#404040]" : ""
             } dark:hover:bg-[#404040] hover:bg-gray-200`}
-            onClick={() => setSlected(1)}
+            onClick={() => (handleClick(1, "dashboard"))}
+            role="button"
           >
             <Menu className="mr-4" width={22} />
             <p className="text-sm">DashBoard</p>
@@ -72,12 +77,12 @@ const Sidebar = () => {
             className={`flex items-center px-3 py-[0.75rem] rounded-lg text-[#000] dark:text-white ${
               selected == 1 ? "dark:bg-[#404040] bg-gray-200" : ""
             } dark:hover:bg-[#404040] hover:bg-gray-200`}
-            onClick={() => setSlected(1)}
+            onClick={() => (handleClick(1, "dashboard"))}
           >
             <Home className="mr-4" width={22} />
             <p className="text-sm">DashBoard</p>
           </div>
-          <a href={"#projects"} className="text-sm">
+          <a href={"/dashboard#projects"} className="text-sm">
             <div
               className={`flex items-center px-3 py-[0.75rem] rounded-lg text-[#000] dark:text-white ${
                 selected == 2 ? "dark:bg-[#404040] bg-gray-200" : ""
@@ -112,7 +117,7 @@ const Sidebar = () => {
             className={`flex items-center px-3 py-[0.75rem] rounded-lg text-[#000] dark:text-white ${
               selected == 5 ? "dark:bg-[#404040] bg-gray-200" : ""
             } dark:hover:bg-[#404040] hover:bg-gray-200`}
-            onClick={() => setSlected(5)}
+            onClick={() => handleClick(5, "chats")}
           >
             <MessageSquareMore className="mr-4" width={22} />
             <p className="text-sm">Messages</p>

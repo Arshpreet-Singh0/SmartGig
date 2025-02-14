@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { LogOut, User, Menu, X } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import ThemeToggle from "../ui/ThemeToggle";
+// import ThemeToggle from "../ui/ThemeToggle";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { clearUser, isUserLoggedIn } from "../../redux/authSlice";
 
@@ -69,15 +69,15 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8">
           <li className="hover:text-blue-600">
-            <Link to="/">Home</Link>
+            <Link to="/" className="font-semibold opacity-70 hover:opacity-100 transition-all duration-200">Home</Link>
           </li>
           <li className="hover:text-blue-600">
-            <Link to="/projects">Project</Link>
+            <Link to="/projects" className="font-semibold opacity-70 hover:opacity-100 transition-all duration-200">Project</Link>
           </li>
           {isUserExist ? (
             <>
               <li className="hover:text-blue-600">
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard" className="font-semibold opacity-70 hover:opacity-100 transition-all duration-200">Dashboard</Link>
               </li>
               <li>
                 <div ref={dropdownRef} className="relative">
@@ -124,7 +124,7 @@ const Navbar = () => {
               />
             </>
           )}
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </ul>
       </div>
 
@@ -165,17 +165,17 @@ const Navbar = () => {
           ) : (
             <>
               <li className="hover:text-blue-600">
-                <Link to="/signin">Sign in</Link>
+                <Link to="/signin" className="text-[#000] dark:text-white font-semibold opacity-70 hover:opacity-100 transition-all duration-200">Sign in</Link>
               </li>
               <Button
                 text="Join"
                 variant="outline"
-                className="hover:bg-blue-100 duration-300 w-full"
+                className="hover:bg-blue-100 duration-300 w-full font-extrabold"
                 onClick={() => navigate("/signup")}
               />
             </>
           )}
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </ul>
       </div>
     </div>

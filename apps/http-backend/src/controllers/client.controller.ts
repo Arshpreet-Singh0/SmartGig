@@ -208,3 +208,15 @@ export const getClientPendingProject = async (
     
   }
 }
+
+// export const rejectProposal = async(req: Request,
+//   res: Response,
+//   next : NextFunction
+//   )=>{
+//     try {
+      
+//     } catch (error) {
+//       console.log(error);
+//       next(error);
+//     }
+//   }
