@@ -48,7 +48,7 @@ const Sidebar = () => {
             className={`flex items-center px-3 py-[0.75rem] rounded-lg text-[#000] dark:text-white ${
               selected == 3 ? "dark:bg-[#404040] bg-gray-200" : ""
             } dark:hover:bg-[#404040] hover:bg-gray-200`}
-            onClick={() => setSlected(3)}
+            onClick={() => navigate('/chats')}
           >
             <MessageSquareMore className="mr-4" width={22} />
             <p className="text-sm">Messages</p>

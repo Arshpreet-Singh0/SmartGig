@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma";
 
-export const createProject = async(req:Request, res:Response) : Promise<void> =>{
+export const createProject = async(req:Request, res:Response, next : NextFunction) : Promise<void> =>{
     try {
         const userId = req.userId;
 
@@ -34,12 +34,14 @@ export const createProject = async(req:Request, res:Response) : Promise<void> =>
 
     } catch (error) {
         console.log(error); 
+        next(error);
     }
 };
 
 export const getClientProjects = async (
     req: Request,
-    res: Response
+    res: Response,
+    next : NextFunction
   ): Promise<void> => {
     try {
       const userId = req.userId;
@@ -67,12 +69,14 @@ export const getClientProjects = async (
       });
     } catch (error) {
       console.log(error);
+      next(error);
     }
   };
 
 export const acceptProposal = async (
     req: Request,
-    res: Response
+    res: Response,
+    next : NextFunction
   ): Promise<void> =>{
 
     try {
@@ -144,12 +148,14 @@ export const acceptProposal = async (
 
     } catch (error) {
         console.log(error);
+        next(error);
     }
   }
   
 export const getProposals = async (
     req: Request,
-    res: Response
+    res: Response,
+    next : NextFunction
   ): Promise<void> =>{
     try {
         const {projectId} = req.params;
@@ -174,12 +180,14 @@ export const getProposals = async (
         })
     } catch (error) {
         console.log(error);
+        next(error);
     }
   }
 
 export const getClientPendingProject = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> =>{
   try {
     const userId = req.userId;
@@ -196,6 +204,7 @@ export const getClientPendingProject = async (
     })
   } catch (error) {
     console.log(error);
+    next(error);
     
   }
 }

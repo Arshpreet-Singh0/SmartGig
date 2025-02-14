@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 import cookieParser from 'cookie-parser';
@@ -18,7 +18,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+
+      "http://localhost:3000",  // Another local frontend
+      "http://ec2-54-221-74-17.compute-1.amazonaws.com:3000","http://smartgig.messagemate.site"  ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -38,7 +41,7 @@ app.get('/', async(req:Request, res:Response)=>{
     res.send('Working');
 })
 
-app.get("/recent-chats", isAuthenticated, async (req: Request, res: Response) => {
+app.get("/recent-chats", isAuthenticated, async (req: Request, res: Response, next : NextFunction) => {
   try {
     const userId = Number(req.userId);
 
@@ -86,11 +89,11 @@ app.get("/recent-chats", isAuthenticated, async (req: Request, res: Response) =>
     res.status(200).json({ recentChats });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    next(error);
   }
 });
 
-app.get('/messages/:senderId', isAuthenticated, async (req, res) => {
+app.get('/messages/:senderId', isAuthenticated, async (req, res, next : NextFunction) => {
   try {
     const userId = Number(req.userId);
     const senderId = Number(req.params.senderId);
@@ -111,11 +114,11 @@ app.get('/messages/:senderId', isAuthenticated, async (req, res) => {
     res.json({ chats });
   } catch (error) {
     console.error("Error fetching messages:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 });
 
-app.post("/send-message/:id", isAuthenticated, async(req, res)=>{
+app.post("/send-message/:id", isAuthenticated, async(req, res, next : NextFunction)=>{
   try {
     const userId = Number(req.userId);
     const {message} = req.body;
@@ -136,8 +139,17 @@ app.post("/send-message/:id", isAuthenticated, async(req, res)=>{
 
   } catch (error) {
     console.log(error);
+    next(error);
   }
 });  
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = err.status || 500;
+  res.status(statusCode).json({
+      success: false,
+      message: err.message || 'Internal Server Error',
+  });
+});
 
 
 app.listen(PORT, ()=>{

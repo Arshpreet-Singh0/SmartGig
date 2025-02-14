@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma";
 
 export const getProject = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const page = parseInt(req?.params?.page as unknown as string, 10) || 1; // Ensure `page` is a number, defaulting to 1 if undefined
@@ -35,11 +36,11 @@ export const getProject = async (
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send("Server error");
+    next(error);
   }
 };
 
-export const getProjectById = async (req: Request, res: Response) => {
+export const getProjectById = async (req: Request, res: Response, next : NextFunction) => {
   try {
     const { projectId } = req.params;
 
@@ -63,5 +64,6 @@ export const getProjectById = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };

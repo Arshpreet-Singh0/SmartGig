@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma";
 
 export const getFreelancerAssignedProjects = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const projects = await prisma.project.findMany({
@@ -28,12 +29,14 @@ export const getFreelancerAssignedProjects = async (
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
 export const createProposal = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const { coverLetter, proposedBudget, proposedTimeline } = req.body;
@@ -80,10 +83,11 @@ export const createProposal = async (
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
-export const getSubmittedProposal = async (req: Request, res: Response) => {
+export const getSubmittedProposal = async (req: Request, res: Response, next : NextFunction) => {
   try {
     const userId = req.userId;
     const proposals = await prisma.proposal.findMany({
@@ -100,12 +104,14 @@ export const getSubmittedProposal = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
 export const getProjectProposal = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const userId = req.userId;
@@ -132,12 +138,14 @@ export const getProjectProposal = async (
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
 export const deleteProposal = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const { proposalId } = req.params;
@@ -181,12 +189,14 @@ export const deleteProposal = async (
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
 export const getProposalByProjectId = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const { projectId } = req.params;
@@ -203,12 +213,17 @@ export const getProposalByProjectId = async (
       proposal,
       success: true,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    next(error);
+    
+  }
 };
 
 export const updateProposal = async (
   req: Request,
-  res: Response
+  res: Response,
+  next : NextFunction
 ): Promise<void> => {
   try {
     const { coverLetter, proposedBudget, proposedTimeline } = req.body;
@@ -242,5 +257,6 @@ export const updateProposal = async (
     });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };

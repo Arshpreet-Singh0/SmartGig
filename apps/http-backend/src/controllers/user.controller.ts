@@ -1,13 +1,12 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../config/prisma";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {JWT_SECRET as  secretKey} from "@repo/backend-common/config";
-import { log } from "console";
 
 
 
-export const signup = async (req: Request, res: Response): Promise<void> => {
+export const signup = async (req: Request, res: Response, next : NextFunction): Promise<void> => {
   try {
     const { name, email, password, accountType } = req.body;
     if (!name || !email || !password) {
@@ -65,14 +64,11 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      message: "Internal Server Error",
-      success: false,
-    });
+    next(error);
   }
 };
 
-export const signin = async (req: Request, res: Response): Promise<void> => {
+export const signin = async (req: Request, res: Response, next : NextFunction): Promise<void> => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -130,11 +126,12 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
       });
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
 
-export const updateUserProfile = async (req: Request, res: Response): Promise<void> => {
+export const updateUserProfile = async (req: Request, res: Response, next : NextFunction): Promise<void> => {
   const userId = req.userId;
   const {
     name,
@@ -194,11 +191,11 @@ export const updateUserProfile = async (req: Request, res: Response): Promise<vo
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error updating user profile", error });
+    next(error);
   }
 };
 
-export const updateClientProfile = async (req: Request, res: Response): Promise<void> => {
+export const updateClientProfile = async (req: Request, res: Response, next : NextFunction): Promise<void> => {
   const userId = req.userId;
   const {
     name,
@@ -238,11 +235,11 @@ export const updateClientProfile = async (req: Request, res: Response): Promise<
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ message: "Error updating user profile", error });
+    next(error);
   }
 };
 
-export const getUserProfilebyId = async (req:Request, res:Response)=>{
+export const getUserProfilebyId = async (req:Request, res:Response, next : NextFunction)=>{
   const userId = req.params.id;
 
   try {
@@ -271,11 +268,11 @@ export const getUserProfilebyId = async (req:Request, res:Response)=>{
   });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ message: "Error updating user profile", error });
+    next(error);
   }
 
 }
-export const getUserProfile = async (req:Request, res:Response)=>{
+export const getUserProfile = async (req:Request, res:Response, next : NextFunction)=>{
   const userId = req.userId;
 
   try {
@@ -305,7 +302,7 @@ export const getUserProfile = async (req:Request, res:Response)=>{
   });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ message: "Error updating user profile", error });
+    next(error);
   }
 
 }

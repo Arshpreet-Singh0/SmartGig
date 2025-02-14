@@ -5,6 +5,7 @@ import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../Config";
 
 const Signup = () => {
     const [input, setInput] = useState({
@@ -25,7 +26,7 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post("http://localhost:8080/api/v1/user/signup", input ,{
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, input ,{
                 withCredentials : true,
             });
             

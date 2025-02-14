@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import {prisma} from "@repo/db/client"
 
 
-const wss = new WebSocketServer({port : 3000});
+const wss = new WebSocketServer({port : 3001});
 
 const connection = new Map<String , WebSocket>();
 

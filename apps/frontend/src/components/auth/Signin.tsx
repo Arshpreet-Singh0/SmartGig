@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/hook';
 import { setUser } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { BACKEND_URL } from '../../Config';
 
 const Signin = () => {
     const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const Signin = () => {
           e.preventDefault();
           try {
             const res = await axios.post(
-              "http://localhost:8080/api/v1/user/signin",
+              `${BACKEND_URL}/api/v1/user/signin`,
               input,
               {
                 withCredentials: true,
