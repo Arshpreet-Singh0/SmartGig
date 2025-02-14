@@ -3,6 +3,7 @@ import prisma from "../config/prisma";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {JWT_SECRET as  secretKey} from "@repo/backend-common/config";
+import { log } from "console";
 
 
 
@@ -147,46 +148,56 @@ export const updateUserProfile = async (req: Request, res: Response): Promise<vo
     education,
     skills
   } = req.body;
+
   try {
     const userExists = await prisma.user.findUnique({
       where: { id: Number(userId) },
     });
 
     if (!userExists) {
-      res.status(404).send({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
 
-    const updatedEducation: EducationInput[] = education.map(({ id, userId, ...rest }: { id?: number; userId?: number } & EducationInput) => rest);
-    
+    const updateData: any = {};
+
+    if (name !== undefined) updateData.name = name;
+    if (about !== undefined) updateData.about = about;
+    if (location !== undefined) updateData.location = location;
+    if (responseTime !== undefined) updateData.responseTime = responseTime;
+    if (profilePicture !== undefined) updateData.profilePicture = profilePicture;
+    if (hourlyRate !== undefined) updateData.HourlyRate = hourlyRate;
+    if (availability !== undefined) updateData.availability = availability;
+    if (role !== undefined) updateData.role = role;
+
+    if (skills !== undefined) {
+      updateData.skills = Array.isArray(skills) ? skills : skills.split(",");
+    }
+
+    if (education !== undefined && Array.isArray(education)) {
+      const updatedEducation = education.map(({ id, userId, ...rest }: { id?: number; userId?: number } & EducationInput) => rest);
+      
+      updateData.education = {
+        deleteMany: {}, 
+        create: updatedEducation,
+      };
+    }
+
     await prisma.user.update({
       where: { id: Number(userId) },
-      data: {
-        name,
-        about,
-        location,
-        HourlyRate : hourlyRate,
-        availability,
-        role,
-        responseTime,
-        profilePicture,
-        education: {
-          deleteMany: {}, 
-          create: updatedEducation
-        },
-        skills: skills
-      }
+      data: updateData,
     });
 
     res.status(200).json({
-      message : 'Profile Updated Successfully.',
-      success : true
+      message: "Profile Updated Successfully.",
+      success: true,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: "Error updating user profile", error });
+    console.error(error);
+    res.status(500).json({ message: "Error updating user profile", error });
   }
 };
+
 export const updateClientProfile = async (req: Request, res: Response): Promise<void> => {
   const userId = req.userId;
   const {

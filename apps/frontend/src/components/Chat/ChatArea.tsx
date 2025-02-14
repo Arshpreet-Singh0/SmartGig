@@ -4,7 +4,6 @@ import { useAppSelector } from "../../hooks/hook";
 import axios from "axios";
 import { BACKEND_URL } from "../../Config";
 import { useSocket } from "../../hooks/useSocket";
-import { data } from "react-router-dom";
 
 interface Chat {
   id: number;

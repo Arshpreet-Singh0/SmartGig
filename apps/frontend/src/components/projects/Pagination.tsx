@@ -22,7 +22,7 @@ const Pagination = ({ totalResults, resultsPerPage, currentPage, setCurrentPage 
   };
 
   return (
-    <div className="flex items-center justify-end space-x-2 h-20 bg-gray-50 dark:bg-black-200 text-[#000] dark:text-white px-10 fixed bottom-0 w-full pr-72">
+    <div className="flex items-center justify-end h-20 bg-gray-50 dark:bg-black-200 text-[#000] dark:text-white px-10 fixed bottom-0 w-full gap-5">
       {/* Previous Button */}
       <button
         className="px-4 py-2 border rounded-md dark:hover:bg-gray-200"

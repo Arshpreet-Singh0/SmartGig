@@ -1,10 +1,3 @@
-const services = [
-  "Responsive Web Development",
-  "Full-Stack Application Development",
-  "API Integration & Backend Services",
-  "UI/UX Design and Prototyping",
-  "SEO Optimization",
-];
 
 const Info = () => {
   return (

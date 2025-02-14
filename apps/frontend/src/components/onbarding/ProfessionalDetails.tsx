@@ -19,7 +19,7 @@ const ProfessionalDetails = ({profile, updateProfile, handleSkillInput} : {
               </label>
               <Input
                   type="text"
-                  value={profile?.skills?.join(", ")}
+                  value={profile?.skills}
                   onChange={(e) => handleSkillInput(e.target.value)}
                   placeholder="React, TypeScript, Node.js"
                   classname="bg-gray-50 dark:bg-[#404040] border dark:border-gray-700 focus:ring-gray-700 focus:border-blue-500 w-full dark:text-gray-300 mt-1 px-10"

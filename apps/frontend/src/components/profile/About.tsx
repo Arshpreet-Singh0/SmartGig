@@ -50,7 +50,7 @@ console.log(profile.about);
             <div className="border border-gray-300 p-5 rounded-xl bg-[#f5f5f5]">
                 <h4>Education</h4>
               <div className="mt-5 text-gray-600 flex flex-col gap-3">
-                {profile?.education?.map((education:any, index:number) => (
+                {profile?.education?.map((education:any) => (
                   <div>
                     <h4 className="text-black-100">{education.degree}</h4>
                     <p className="text-sm">{education.institution}</p>

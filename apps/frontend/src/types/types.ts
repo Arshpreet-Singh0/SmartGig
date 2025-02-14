@@ -6,7 +6,7 @@ export interface FreelancerProfile {
     role : string;
     
     // Professional Details
-    skills: string[];
+    skills: string;
     yearsOfExperience: number;
     
     // Education

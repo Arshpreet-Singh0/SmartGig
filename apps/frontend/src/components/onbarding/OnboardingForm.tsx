@@ -18,7 +18,7 @@ const initialProfile: FreelancerProfile = {
     location: "",
     role : "",
     about: "",
-    skills: [],
+    skills: "",
     yearsOfExperience: 0,
     education: [{ degree: "", institution: "", startYear: "", endYear : "" }],
     experience: [
@@ -39,8 +39,7 @@ const OnboardindForm = () => {
   };
 
   const handleSkillInput = (input: string) => {
-    const skillsArray = input.split(",").map((skill) => skill.trim());
-    updateProfile({ skills: skillsArray });
+    updateProfile({ skills: input });
   };
 
   useEffect(()=>{

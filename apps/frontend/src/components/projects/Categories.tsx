@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const FilterDropdowns = () => {
-  const [selectedFilters, setSelectedFilters] = useState({
+interface FilterOption {
+  key: keyof SelectedFilters;
+  label: string;
+  options: string[];
+}
+
+interface SelectedFilters {
+  category: string;
+  experienceLevel: string;
+  projectLength: string;
+  budgetRange: string;
+}
+
+const FilterDropdowns: React.FC = () => {
+  const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
     category: '',
     experienceLevel: '',
     projectLength: '',
     budgetRange: ''
   });
-  const [dropdownOpen, setDropdownOpen] = useState({
+  const [dropdownOpen, setDropdownOpen] = useState<Record<keyof SelectedFilters, boolean>>({
     category: false,
     experienceLevel: false,
     projectLength: false,
     budgetRange: false
   });
 
-  const filterOptions = [
+  const filterOptions: FilterOption[] = [
     {
       key: 'category',
       label: 'Category',
@@ -38,19 +51,19 @@ const FilterDropdowns = () => {
     }
   ];
 
-  const toggleDropdown = (key) => {
+  const toggleDropdown = (key: keyof SelectedFilters) => {
     setDropdownOpen(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleSelectFilter = (key, option) => {
+  const handleSelectFilter = (key: keyof SelectedFilters, option: string) => {
     setSelectedFilters(prev => ({ ...prev, [key]: option }));
     setDropdownOpen(prev => ({ ...prev, [key]: false }));
   };
 
   return (
-    <div className=" border-b border-gray-300">
+    <div className="border-b border-gray-300">
       <div className='flex items-center px-20 h-20 w-[75%] mx-auto gap-12'>
-        <h3>Filter </h3>
+        <h3>Filter</h3>
 
         {filterOptions.map(filter => (
           <div key={filter.key} className="relative">

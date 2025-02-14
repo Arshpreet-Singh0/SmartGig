@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { LogOut, Search, User, Menu, X } from "lucide-react";
+import { LogOut, User, Menu, X } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "../ui/ThemeToggle";
