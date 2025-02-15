@@ -93,7 +93,7 @@ const Navbar = () => {
                         <h1 className="text-lg text-center">{user?.name}</h1>
                       </div>
                       <div className="border-t border-gray-200">
-                        <div onClick={() => navigate("/profile")}>
+                        <div onClick={() => navigate(`/profile/${user?.id}`)}>
                           <h2 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
                             <User className="mr-2" />
                             <p>Profile</p>
